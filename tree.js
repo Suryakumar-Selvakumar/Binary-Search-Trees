@@ -105,28 +105,89 @@ export class Tree {
     }
   }
 
-  levelOrder(callback) {
+  levelOrder(node, callback) {
     if (!callback) {
       throw new Error("Callback is required");
     }
 
-    let curNode = this.root,
-      queue = [];
+    let queue = [],
+      curNode;
 
-    if (root == null) return;
+    if (node === null) return;
 
-    queue.push(curNode);
+    queue.push(node);
+    queue.push(null);
 
-    while (!queue.length === 0) {
+    while (queue.length > 0) {
       curNode = queue.shift();
       callback(curNode);
-      if (curNode.left !== null) {
-        queue.push(curNode.left);
-      }
-      if (curNode.right !== null) {
-        queue.push(curNode.right);
+      if (curNode === null) {
+        if (queue.length > 0) {
+          queue.push(null);
+        }
+      } else {
+        if (curNode.left !== null) {
+          queue.push(curNode.left);
+        }
+        if (curNode.right !== null) {
+          queue.push(curNode.right);
+        }
       }
     }
+  }
+
+  inOrder(root, callback) {
+    if (!callback) {
+      throw new Error("Callback is required");
+    }
+
+    if (root === null) {
+      return;
+    }
+
+    this.inOrder(root.left);
+    callback(root);
+    this.inOrder(root.right);
+  }
+
+  preOrder(root, callback) {
+    if (!callback) {
+      throw new Error("Callback is required");
+    }
+
+    if (root === null) {
+      return;
+    }
+
+    callback(root);
+    this.preOrder(root.left);
+    this.preOrder(root.right);
+  }
+
+  postOrder(root, callback) {
+    if (!callback) {
+      throw new Error("Callback is required");
+    }
+
+    if (root === null) {
+      return;
+    }
+
+    this.postOrder(root.left);
+    this.postOrder(root.right);
+    callback(root);
+  }
+
+  // height(node) {}
+
+  height(node) {
+    let height = -1;
+    this.levelOrder(node, (curNode) => {
+      if (curNode === null) {
+        height++;
+      }
+    });
+    return height;
   }
 }
 
@@ -171,8 +232,14 @@ const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree();
 tree.buildTree(arr);
 // console.log(tree.root);
-// tree.insert(20);
-// console.log(prettyPrint(tree.root));
+tree.insert(20);
+console.log(prettyPrint(tree.root));
 // tree.deleteItem(6345);
 // console.log(prettyPrint(tree.root));
 // console.log(tree.find(10));
+// console.log(tree.depth(tree.root));
+
+// function myDisplayer(some) {
+//   console.log(some);
+// }
+console.log(tree.height(tree.root.left));
