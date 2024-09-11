@@ -201,6 +201,31 @@ export class Tree {
     }
     return depth;
   }
+
+  isBalanced() {
+    let root = this.root,
+      heightArray = [],
+      heightDiff = 0,
+      leftNodeHeight = 0,
+      rightNodeHeight = 0;
+    this.levelOrder(root, (curNode) => {
+      if (curNode !== null) {
+        if (curNode.left !== null) {
+          leftNodeHeight = this.height(curNode.left);
+        }
+        if (curNode.right !== null) {
+          rightNodeHeight = this.height(curNode.right);
+        }
+        heightDiff = leftNodeHeight - rightNodeHeight;
+
+        if (heightDiff > 1 || heightDiff < -1) {
+          heightArray.push(heightDiff);
+        }
+        (heightDiff = 0), (leftNodeHeight = 0), (rightNodeHeight = 0);
+      }
+    });
+    return heightArray.length === 0;
+  }
 }
 
 function removeDuplicates(arr) {
@@ -245,13 +270,13 @@ const tree = new Tree();
 tree.buildTree(arr);
 // console.log(tree.root);
 tree.insert(20);
-console.log(prettyPrint(tree.root));
-// tree.deleteItem(6345);
-// console.log(prettyPrint(tree.root));
+// tree.deleteItem(67);
 // console.log(tree.find(10));
 // console.log(tree.depth(tree.root));
 
 // function myDisplayer(some) {
 //   console.log(some);
 // }
-console.log(tree.depth(tree.find(20)));
+// console.log(tree.height(tree.root.left.right));
+console.log(tree.isBalanced());
+console.log(prettyPrint(tree.root));
