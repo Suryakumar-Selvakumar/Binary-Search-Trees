@@ -12,9 +12,9 @@ console.log(tree.isBalanced());
 
 // Printing out elements in level, pre, post and in Order
 let displayArr = [];
-function displayElements(elem) {
+const displayElements = (elem) => {
   if (elem !== null) displayArr = displayArr.concat(elem.data);
-}
+};
 
 // levelOrder Traversal
 tree.levelOrder(tree.root, displayElements);
@@ -45,10 +45,27 @@ tree.insert(999);
 console.log(prettyPrint(tree.root));
 console.log(tree.isBalanced());
 
-// tree.deleteItem(67);
-// console.log(tree.find(10));
-// console.log(tree.depth(tree.root));
+// Balancing the tree using rebalance()
+tree.rebalance();
+console.log(prettyPrint(tree.root));
+console.log(tree.isBalanced());
 
-// console.log(tree.height(tree.root.left.right));
-// tree.rebalance();
-// console.log(prettyPrint(tree.root));
+// levelOrder Traversal
+tree.levelOrder(tree.root, displayElements);
+console.log("Level-Order Traversal =>", displayArr);
+displayArr = [];
+
+// preOrder Traversal
+tree.preOrder(tree.root, displayElements);
+console.log("Pre-Order Traversal =>", displayArr);
+displayArr = [];
+
+// postOrder Traversal
+tree.postOrder(tree.root, displayElements);
+console.log("Post-Order Traversal", displayArr);
+displayArr = [];
+
+// inOrder Traversal
+tree.inOrder(tree.root, displayElements);
+console.log("In-Order Traversal", displayArr);
+displayArr = [];
