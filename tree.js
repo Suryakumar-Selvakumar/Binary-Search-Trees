@@ -6,9 +6,10 @@ export class Tree {
   }
 
   buildTree(array) {
+    array.sort((a, b) => a - b);
+    array = removeDuplicates(array);
     let start = 0,
       end = array.length - 1;
-    array.sort((a, b) => a - b);
     this.root = sortedArrtoBST(array, start, end);
   }
 
@@ -18,17 +19,31 @@ export class Tree {
     while (curNode.left !== null || curNode.right !== null) {
       if (value < curNode.data) {
         curNode = curNode.left;
-      } else if (value >= curNode.data) {
+      } else if (value > curNode.data) {
         curNode = curNode.right;
+      } else if (value == curNode.data) {
+        break;
       }
     }
 
     if (value < curNode.data) {
       curNode.left = new Node(value);
-    } else if (value >= curNode.data) {
+    } else if (value > curNode.data) {
       curNode.right = new Node(value);
+    } else if (value == curNode.data) {
+      throw new Error("Cannot insert duplicate values, Value already Exists!");
     }
   }
+}
+
+function removeDuplicates(arr) {
+  let unique = [];
+  arr.forEach((element) => {
+    if (!unique.includes(element)) {
+      unique.push(element);
+    }
+  });
+  return unique;
 }
 
 function sortedArrtoBST(array, start, end) {
@@ -58,10 +73,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-// const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-// const tree = new Tree();
-// tree.buildTree(arr);
-// console.log(tree.root);
-// console.log(prettyPrint(tree.root));
-// tree.insert(20);
-// console.log(prettyPrint(tree.root));
+const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const tree = new Tree();
+tree.buildTree(arr);
+console.log(tree.root);
+tree.insert(20);
+console.log(prettyPrint(tree.root));
+tree.insert(20);
+console.log(prettyPrint(tree.root));
