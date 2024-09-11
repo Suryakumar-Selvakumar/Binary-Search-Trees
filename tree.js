@@ -104,6 +104,30 @@ export class Tree {
       return curNode;
     }
   }
+
+  levelOrder(callback) {
+    if (!callback) {
+      throw new Error("Callback is required");
+    }
+
+    let curNode = this.root,
+      queue = [];
+
+    if (root == null) return;
+
+    queue.push(curNode);
+
+    while (!queue.length === 0) {
+      curNode = queue.shift();
+      callback(curNode);
+      if (curNode.left !== null) {
+        queue.push(curNode.left);
+      }
+      if (curNode.right !== null) {
+        queue.push(curNode.right);
+      }
+    }
+  }
 }
 
 function removeDuplicates(arr) {
