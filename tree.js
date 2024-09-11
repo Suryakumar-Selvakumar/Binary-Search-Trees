@@ -145,9 +145,9 @@ export class Tree {
       return;
     }
 
-    this.inOrder(root.left);
+    this.inOrder(root.left, callback);
     callback(root);
-    this.inOrder(root.right);
+    this.inOrder(root.right, callback);
   }
 
   preOrder(root, callback) {
@@ -226,6 +226,17 @@ export class Tree {
     });
     return heightArray.length === 0;
   }
+
+  rebalance() {
+    let root = this.root,
+      sortedArr = [];
+
+    this.inOrder(root, (curNode) => {
+      sortedArr.push(curNode.data);
+    });
+
+    this.buildTree(sortedArr);
+  }
 }
 
 function removeDuplicates(arr) {
@@ -270,7 +281,7 @@ const tree = new Tree();
 tree.buildTree(arr);
 // console.log(tree.root);
 tree.insert(20);
-// tree.deleteItem(67);
+tree.deleteItem(67);
 // console.log(tree.find(10));
 // console.log(tree.depth(tree.root));
 
@@ -279,4 +290,6 @@ tree.insert(20);
 // }
 // console.log(tree.height(tree.root.left.right));
 console.log(tree.isBalanced());
+console.log(prettyPrint(tree.root));
+tree.rebalance();
 console.log(prettyPrint(tree.root));
