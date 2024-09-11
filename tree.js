@@ -1,20 +1,21 @@
 import { Node } from "./node.js";
 
 export class Tree {
-  constructor(root) {
-    this.root = root;
+  constructor() {
+    this.root;
   }
 
   buildTree(array) {
     let start = 0,
       end = array.length - 1;
-    return sortedArrtoBST(array, start, end);
+    array.sort((a, b) => a - b);
+    this.root = sortedArrtoBST(array, start, end);
   }
 }
 
 function sortedArrtoBST(array, start, end) {
   if (start > end) {
-    return;
+    return null;
   }
 
   let mid = Math.floor((start + end) / 2);
@@ -25,3 +26,21 @@ function sortedArrtoBST(array, start, end) {
 
   return node;
 }
+
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
+
+const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const tree = new Tree();
+tree.buildTree(arr);
+console.log(prettyPrint(tree.root));
