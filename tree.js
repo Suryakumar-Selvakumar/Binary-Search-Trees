@@ -34,6 +34,76 @@ export class Tree {
       throw new Error("Cannot insert duplicate values, Value already Exists!");
     }
   }
+
+  deleteItem(value) {
+    let curNode = this.root,
+      prev = null;
+
+    // Get the parent node and node of element
+    while (curNode !== null && curNode.data !== value) {
+      prev = curNode;
+      if (value < curNode.data) {
+        curNode = curNode.left;
+      } else {
+        curNode = curNode.right;
+      }
+    }
+
+    // Loop finished iterating because curNode reached null
+    // which means value was not found
+    if (curNode === null) {
+      console.log("Value not found!");
+      return;
+    }
+
+    // Case 1 - Node has one child in left or right sub-tree
+    // Case 2 - Node has no child, i.e., its a leaf node
+    // Works for both cases
+    if (curNode.left === null || curNode.right === null) {
+      let newCurNode = curNode.left === null ? curNode.right : curNode.left;
+
+      if (prev.left === curNode) {
+        prev.left = newCurNode;
+      } else if (prev.right === curNode) {
+        prev.right = newCurNode;
+      }
+    }
+    // Case 2 - Node has two children - both left and right sub-trees exist
+    else {
+      let p = null,
+        temp = curNode.right;
+      while (temp.left !== null) {
+        p = temp;
+        temp = temp.left;
+      }
+
+      if (p !== null) {
+        p.left = temp.right;
+      } else {
+        curNode.right = temp.right;
+      }
+      curNode.data = temp.data;
+    }
+  }
+
+  find(value) {
+    let curNode = this.root;
+
+    // Get the node of element
+    while (curNode !== null && curNode.data !== value) {
+      if (value < curNode.data) {
+        curNode = curNode.left;
+      } else {
+        curNode = curNode.right;
+      }
+    }
+
+    if (curNode === null) {
+      console.log("Value not found!");
+    } else {
+      return curNode;
+    }
+  }
 }
 
 function removeDuplicates(arr) {
@@ -76,8 +146,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree();
 tree.buildTree(arr);
-console.log(tree.root);
-tree.insert(20);
-console.log(prettyPrint(tree.root));
-tree.insert(20);
-console.log(prettyPrint(tree.root));
+// console.log(tree.root);
+// tree.insert(20);
+// console.log(prettyPrint(tree.root));
+// tree.deleteItem(6345);
+// console.log(prettyPrint(tree.root));
+// console.log(tree.find(10));
