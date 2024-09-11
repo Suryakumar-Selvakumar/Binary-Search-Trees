@@ -45,14 +45,9 @@ function randomNumsArray(n) {
   return arr;
 }
 
-function displayElements(elem) {
-  console.log(elem);
-}
-
 export {
   prettyPrint,
   sortedArrtoBST,
   removeDuplicates,
   randomNumsArray,
-  displayElements,
 };

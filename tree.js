@@ -14,9 +14,11 @@ export class Tree {
   }
 
   insert(value) {
-    let curNode = this.root;
+    let curNode = this.root,
+      prev = null;
 
-    while (curNode.left !== null || curNode.right !== null) {
+    while (curNode !== null) {
+      prev = curNode;
       if (value < curNode.data) {
         curNode = curNode.left;
       } else if (value > curNode.data) {
@@ -26,11 +28,11 @@ export class Tree {
       }
     }
 
-    if (value < curNode.data) {
-      curNode.left = new Node(value);
-    } else if (value > curNode.data) {
-      curNode.right = new Node(value);
-    } else if (value == curNode.data) {
+    if (value < prev.data) {
+      prev.left = new Node(value);
+    } else if (value > prev.data) {
+      prev.right = new Node(value);
+    } else if (value == prev.data) {
       throw new Error("Cannot insert duplicate values, Value already Exists!");
     }
   }
@@ -160,8 +162,8 @@ export class Tree {
     }
 
     callback(root);
-    this.preOrder(root.left);
-    this.preOrder(root.right);
+    this.preOrder(root.left, callback);
+    this.preOrder(root.right, callback);
   }
 
   postOrder(root, callback) {
@@ -173,8 +175,8 @@ export class Tree {
       return;
     }
 
-    this.postOrder(root.left);
-    this.postOrder(root.right);
+    this.postOrder(root.left, callback);
+    this.postOrder(root.right, callback);
     callback(root);
   }
 
