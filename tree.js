@@ -178,8 +178,6 @@ export class Tree {
     callback(root);
   }
 
-  // height(node) {}
-
   height(node) {
     let height = -1;
     this.levelOrder(node, (curNode) => {
@@ -188,6 +186,20 @@ export class Tree {
       }
     });
     return height;
+  }
+
+  depth(node) {
+    let root = this.root;
+    let depth = 0;
+    while (root != null && root.data !== node.data) {
+      if (node.data < root.data) {
+        root = root.left;
+      } else {
+        root = root.right;
+      }
+      depth++;
+    }
+    return depth;
   }
 }
 
@@ -242,4 +254,4 @@ console.log(prettyPrint(tree.root));
 // function myDisplayer(some) {
 //   console.log(some);
 // }
-console.log(tree.height(tree.root.left));
+console.log(tree.depth(tree.find(20)));
