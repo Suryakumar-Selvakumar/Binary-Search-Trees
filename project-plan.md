@@ -26,7 +26,7 @@
 
 5. find(value) – For this you would just traverse through the tree, compare the value of each node with the argument value’s value and return the entire node that contains the matching value. Whether or not, you would include the children is something you’d have to decide later on.
 
-6. levelOrder(callback) – I need to implement breadth first search (BFS), which can be done with enough research. I have to pass each of the nodes to a callback function which I think just prints out the values. Maybe ask someone on TOP for clarification.
+6. levelOrder(callback) – I need to implement breadth first search (BFS), which can be done with enough research. I have to pass each of the nodes to a callback function which I think just prints out the values.
 
 7. DFS Functions:
 
@@ -50,4 +50,4 @@
 
     i) First, the buildTree() will infact sort the array to create a balanced BST. Then after you add large elements to the tree, it becomes unbalanced. You’re adding elements to the tree obj, you can’t pass that into build tree. So you need to use a traversal to get the sorted array and call build tree with that array to get a balanced BST which you re-assign back to the tree object.
 
-12. script.js – Driver Script – Just follow the instructions given on TOP and create the driver script.
+12. script.js – Driver Script – create it to run the entire thing.
