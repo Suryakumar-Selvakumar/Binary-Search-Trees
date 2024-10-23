@@ -17,4 +17,4 @@ Balanced Binary Search Tree implemented with, <br>
   - Is-Balanced?
 
 
-Please have a look at my project plan if you'd like to see my thought process behind building this project.
+Please find my project plan if you'd like to see my thought process behind building this project.
